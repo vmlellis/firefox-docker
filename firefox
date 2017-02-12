@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+
+IMAGE="vmlellis/firefox"
+
+# Setup volume mounts for compose config and context
+if [ "$(pwd)" != '/' ]; then
+    VOLUMES="-v $(pwd):$(pwd)"
+fi
+if [ -n "$HOME" ]; then
+    VOLUMES="$VOLUMES -v $HOME:$HOME -v $HOME:/root -v $HOME:/home/xclient" # mount $HOME in /root to share docker.config
+fi
+
+exec docker run -it \
+                $VOLUMES \
+                -v /tmp/.X11-unix \
+                -e UID=$(id -u) \
+                -e GID=$(id -g) \
+                -e DISPLAY=$DISPLAY \
+                -v $XAUTHORITY:/home/xclient/.Xauthority \
+                -v $HOME/.mozilla:/home/xclient/.mozilla \
+                --net=host \
+                --privileged \
+                firefox
