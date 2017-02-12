@@ -1,5 +1,6 @@
-# How to run
+## Usage
 
+```sh
 docker run -it \
            -v /tmp/.X11-unix \
            -e UID=$(id -u) \
@@ -10,3 +11,10 @@ docker run -it \
            --net=host \
            --privileged \
            firefox
+```
+
+or
+
+```sh
+./firefox
+```
