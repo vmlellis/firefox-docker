@@ -22,4 +22,5 @@ exec docker run -it \
                 -v $HOME/.mozilla:/home/xclient/.mozilla \
                 --net=host \
                 --privileged \
-                firefox
+                $IMAGE \
+                firefox "$@"
